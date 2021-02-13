@@ -39,7 +39,7 @@ public class GravitationMove : MonoBehaviour
             return;
         }
         _a = m_G * m_M * (m_R - m_rStart).normalized / distance;
-        Vector3 newPos = m_rStart + m_VStart + _a * Time.deltaTime / 2;
+        Vector3 newPos = m_rStart + m_VStart + _a * Time.fixedDeltaTime / 2;
         if ((m_R - _lastPos).magnitude < (m_R - newPos).magnitude && _goToCenter)
         {
             m_VStart = m_VStart.normalized;
