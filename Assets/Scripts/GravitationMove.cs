@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,42 +20,29 @@ public class GravitationMove : MonoBehaviour
 
     private float _m = 1.0f;
     private Vector3 _a;
-    private Vector3 _lastPos;
+    private Vector3 _initPos;
     private bool _goToCenter = false;
-    private const float TOLERANCE = 0.5f;
-
 
     private void Start()
     {
         transform.position = m_rStart;
-        _lastPos = m_rStart;
+        _initPos = m_rStart;
     }
-
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
-        float distance = Mathf.Pow((m_R - m_rStart).magnitude, 2);
-        if (distance < TOLERANCE)
+        if ((m_R - _initPos).magnitude < (m_R - m_rStart).magnitude & _goToCenter)
         {
             return;
         }
-        _a = m_G * m_M * (m_R - m_rStart).normalized / distance;
-        Vector3 newPos = m_rStart + m_VStart + _a * Time.fixedDeltaTime / 2;
-        if ((m_R - _lastPos).magnitude < (m_R - newPos).magnitude && _goToCenter)
-        {
-            m_VStart = m_VStart.normalized;
-        }
-        else
-        {
-            m_rStart = newPos;
-        }
-
-        if ((m_R - _lastPos).magnitude > (m_R - m_rStart).magnitude)
+        float square_distance = Mathf.Pow((m_R - m_rStart).magnitude, 2);
+        _a = m_G * m_M * (m_R - m_rStart).normalized / square_distance;
+        m_rStart += m_VStart * Time.fixedDeltaTime + _a * (float)Math.Pow(Time.fixedDeltaTime, 2) / 2;
+        m_VStart += _a * Time.fixedDeltaTime;
+        transform.position = m_rStart;
+        if ((m_R - _initPos).magnitude > (m_R - m_rStart).magnitude)
         {
             _goToCenter = true;
         }
-        _lastPos = m_rStart;
-        m_VStart += _a;
-        transform.position = m_rStart;
     }
 }

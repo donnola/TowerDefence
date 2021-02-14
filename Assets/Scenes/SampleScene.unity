@@ -233,9 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f73161d64de6e429109ef7d86e07c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rStart: {x: 300, y: 0, z: 300}
-  m_VStart: {x: -1, y: 0, z: -3}
-  m_M: 45
+  m_rStart: {x: 2, y: 0, z: 2}
+  m_VStart: {x: 2, y: 1, z: 1}
+  m_M: 5
   m_G: 4
   m_R: {x: 0, y: 0, z: 0}
 --- !u!96 &185821799
