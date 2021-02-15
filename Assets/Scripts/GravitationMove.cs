@@ -23,22 +23,23 @@ public class GravitationMove : MonoBehaviour
     private Vector3 _initPos;
     private bool _goToCenter = false;
 
-    private void Start()
+    private void Awake()
     {
         transform.position = m_rStart;
         _initPos = m_rStart;
     }
-    
+
     void FixedUpdate()
     {
         if ((m_R - _initPos).magnitude < (m_R - m_rStart).magnitude & _goToCenter)
         {
             return;
         }
-        float square_distance = Mathf.Pow((m_R - m_rStart).magnitude, 2);
-        _a = m_G * m_M * (m_R - m_rStart).normalized / square_distance;
-        m_rStart += m_VStart * Time.fixedDeltaTime + _a * (float)Math.Pow(Time.fixedDeltaTime, 2) / 2;
-        m_VStart += _a * Time.fixedDeltaTime;
+        float square_distance = (m_R - m_rStart).magnitude * (m_R - m_rStart).magnitude;
+        _a = m_G * _m * m_M * (m_R - m_rStart).normalized / square_distance;
+        float time = Time.fixedDeltaTime;
+        m_rStart += m_VStart * time + _a * time * time / 2;
+        m_VStart += _a * time;
         transform.position = m_rStart;
         if ((m_R - _initPos).magnitude > (m_R - m_rStart).magnitude)
         {
