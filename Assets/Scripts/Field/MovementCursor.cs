@@ -40,6 +40,23 @@ namespace Field
                        (new Vector3(width, 0f, height) * 0.5f);
         }
         
+        private void Awake()
+        {
+            m_Camera = Camera.main;
+
+            float width = m_GridWidth * m_NodeSize;
+            float height = m_GridHeight * m_NodeSize;
+
+            // Default plane size is 10 by 10
+            transform.localScale = new Vector3(
+                width * 0.1f, 
+                1f,
+                height * 0.1f);
+
+            m_Offset = transform.position -
+                       (new Vector3(width, 0f, height) * 0.5f);
+        }
+        
 
         private void Update()
         {
@@ -74,7 +91,10 @@ namespace Field
                     m_MovementAgent.SetTarget(newPos);
                 }
             }
-            
+            else
+            {
+                m_Cursor.SetActive(false);
+            }
         }
 
         private void OnDrawGizmos()
