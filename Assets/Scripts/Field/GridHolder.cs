@@ -10,6 +10,11 @@ namespace Field
         [SerializeField]
         private int m_GridHeight;
 
+        [SerializeField] 
+        private Vector2Int m_TargetCoordinate;
+        [SerializeField] 
+        private Vector2Int m_StartCoordinate;
+        
         [SerializeField]
         private float m_NodeSize;
 
@@ -19,9 +24,12 @@ namespace Field
 
         private Vector3 m_Offset;
 
+        public Vector2Int StartCoordinate => m_StartCoordinate;
+
+        public Grid Grid => m_Grid;
+
         private void Awake()
         {
-            m_Grid = new Grid(m_GridWidth, m_GridHeight);
             m_Camera = Camera.main;
 
             float width = m_GridWidth * m_NodeSize;
@@ -35,6 +43,7 @@ namespace Field
 
             m_Offset = transform.position -
                        (new Vector3(width, 0f, height) * 0.5f);
+            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate);
         }
 
         private void Update()
@@ -60,15 +69,46 @@ namespace Field
 
                 int x = (int)(difference.x / m_NodeSize);
                 int y = (int) (difference.z / m_NodeSize);
-                
-                Debug.Log(x + " " + y);
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Node node = m_Grid.GetNode(x, y);
+                    node.IsOccupied = !node.IsOccupied;
+                    m_Grid.UpdatePathfinding();
+                }
             }
         }
 
         private void OnDrawGizmos()
         {
+            if (m_Grid == null)
+            {
+                return;
+            }
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(m_Offset, 0.1f);
+            foreach (Node node in m_Grid.EnumerateAllNodes())
+            {
+                if (node.IsOccupied)
+                {
+                    Gizmos.color = Color.black;
+                    Gizmos.DrawSphere(node.Position, 0.5f);
+                    continue;
+                }
+                if (node.NextNode == null)
+                {
+                    continue;
+                }
+                Vector3 start = node.Position;
+                Vector3 end = node.NextNode.Position;
+
+                Vector3 dir = end - start;
+
+                start -= dir * 0.25f;
+                end -= dir * 0.75f;
+                
+                Gizmos.DrawLine(start, end);
+                Gizmos.DrawSphere(end, 0.1f);
+            }
         }
     }
 }
