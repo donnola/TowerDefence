@@ -16,7 +16,7 @@ namespace Field
 
         public int Height => m_Height;
 
-        public Grid(int width, int height, Vector3 offset, float nodeSize, Vector2Int target)
+        public Grid(int width, int height, Vector3 offset, float nodeSize, Vector2Int target, Vector2Int mStart)
         {
             m_Width = width;
             m_Height = height;
@@ -30,9 +30,25 @@ namespace Field
                     m_Nodes[i, j] = new Node(offset + new Vector3(i + .5f, 0, j + .5f) * nodeSize);
                 }
             }
-            m_Pathfinding = new FlowFieldPathfinding(this, target);
+            
+            m_Pathfinding = new FlowFieldPathfinding(this, target, mStart);
             
             m_Pathfinding.UpdateField();
+        }
+
+        public void TryOccupyNode(Vector2Int coordinate, bool occupy)
+        {
+            Node node = GetNode(coordinate);
+            if (!occupy)
+            {
+                node.IsOccupied = false;
+                UpdatePathfinding();
+            }
+            else if (m_Pathfinding.CanOccupy(coordinate))
+            {
+                node.IsOccupied = true;
+                UpdatePathfinding();
+            }
         }
 
         public Node GetNode(Vector2Int coordinate)

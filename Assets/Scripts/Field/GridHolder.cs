@@ -27,6 +27,24 @@ namespace Field
         public Vector2Int StartCoordinate => m_StartCoordinate;
 
         public Grid Grid => m_Grid;
+        
+        private void OnValidate()
+        {
+            m_Camera = Camera.main;
+
+            float width = m_GridWidth * m_NodeSize;
+            float height = m_GridHeight * m_NodeSize;
+
+            // Default plane size is 10 by 10
+            transform.localScale = new Vector3(
+                width * 0.1f, 
+                1f,
+                height * 0.1f);
+
+            m_Offset = transform.position -
+                       (new Vector3(width, 0f, height) * 0.5f);
+            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate, m_StartCoordinate);
+        }
 
         private void Awake()
         {
@@ -43,7 +61,7 @@ namespace Field
 
             m_Offset = transform.position -
                        (new Vector3(width, 0f, height) * 0.5f);
-            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate);
+            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate, m_StartCoordinate);
         }
 
         private void Update()
@@ -73,8 +91,8 @@ namespace Field
                 if (Input.GetMouseButtonDown(0))
                 {
                     Node node = m_Grid.GetNode(x, y);
-                    node.IsOccupied = !node.IsOccupied;
-                    m_Grid.UpdatePathfinding();
+                    Debug.Log(m_Grid.GetNode(x, y).m_OccupationAvailability);
+                    m_Grid.TryOccupyNode(new Vector2Int(x, y), !node.IsOccupied);
                 }
             }
         }

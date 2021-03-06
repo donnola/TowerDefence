@@ -4,6 +4,7 @@ namespace Field
 {
     public class Node
     {
+        public OccupationAvailability m_OccupationAvailability;
         public Vector3 Position;
 
         public Node(Vector3 position)
