@@ -2,6 +2,7 @@
 {
     public class EnemyView : MovementAgent
     {
+     
         
     }
 }
