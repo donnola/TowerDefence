@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d517e3bbf2574733982696215ccc3444, type: 3}
   m_Name: Spawn Waves Asset
   m_EditorClassIdentifier: 
-  EnemyAsset: {fileID: 11400000, guid: a3012698bb0b87847a47c5bbe464a13b, type: 2}
-  Count: 0
-  TimeBetweenSpawn: 0
+  SpawnWaves:
+  - EnemyAsset: {fileID: 11400000, guid: a3012698bb0b87847a47c5bbe464a13b, type: 2}
+    Count: 5
+    TimeBetweenSpawn: 1
+    TimeBeforeStartWave: 1
