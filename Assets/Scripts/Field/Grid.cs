@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Field
@@ -9,6 +10,8 @@ namespace Field
 
         private int m_Width;
         private int m_Height;
+        private Vector3 m_Offset;
+        private float m_NodeSize;
 
         private Vector2Int m_StartCoordinate;
         private Vector2Int m_TargetCoordinate;
@@ -25,6 +28,7 @@ namespace Field
         {
             m_Width = width;
             m_Height = height;
+            m_NodeSize = nodeSize;
 
             m_StartCoordinate = start;
             m_TargetCoordinate = target;
@@ -35,7 +39,8 @@ namespace Field
             {
                 for (int j = 0; j < m_Nodes.GetLength(1); j++)
                 {
-                    m_Nodes[i, j] = new Node(offset + new Vector3(i + .5f, 0, j + .5f) * nodeSize);
+                    m_Nodes[i, j] = new Node(offset + new Vector3(i + .5f, 0, j + .5f) * nodeSize, 
+                        new Vector2Int(i, j), nodeSize);
                 }
             }
             
@@ -72,6 +77,12 @@ namespace Field
         public Node GetSelectedNode()
         {
             return m_SelectedNode;
+        }
+
+        public bool CanOccupy(Node node)
+        {
+            Vector2Int coordinate = node.Coordinate;
+            return m_Pathfinding.CanOccupy(coordinate);
         }
         
         public void TryOccupyNode(Vector2Int coordinate, bool occupy)
@@ -122,6 +133,41 @@ namespace Field
         public void UpdatePathfinding()
         {
             m_Pathfinding.UpdateField();
+        }
+
+        [CanBeNull]
+        public Node GetNodeAtPoint(Vector3 point)
+        {
+            Vector3 difference = point - m_Offset;
+
+            int x = (int)(difference.x / m_NodeSize);
+            int y = (int) (difference.z / m_NodeSize);
+            if (x >= m_Nodes.GetLength(0) || y >= m_Nodes.GetLength(1) || x < 0 || y < 0)
+            {
+                return null;
+            }
+            return GetNode(x, y);
+        }
+
+        public List<Node> GetNodesInCircle(Vector3 point, float radius)
+        {
+            List<Node> nodesInCircle = new List<Node>();
+            for (float i = -radius; i < radius; i += m_NodeSize/10)
+            {
+                for (float j = -radius; j < radius; j += m_NodeSize/10)
+                {
+                    Vector3 nodePoint = point + new Vector3(i, 0, 0) + new Vector3(0, 0, j);
+                    Node curNode1 = GetNodeAtPoint(nodePoint);
+                    if (curNode1 != null && (nodePoint - point).magnitude < radius)
+                    {
+                        if (!nodesInCircle.Contains(curNode1))
+                        {
+                            nodesInCircle.Add(GetNodeAtPoint(nodePoint));
+                        }
+                    }
+                }
+            }
+            return nodesInCircle;
         }
     }
 }

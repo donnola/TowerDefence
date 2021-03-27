@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6adc7caedb1e42e0ab7346d2d8267996, type: 3}
-  m_Name: Enemy Asset
+  m_Script: {fileID: 11500000, guid: 486569a3bdab42d8bc75f6d70cfd1e45, type: 3}
+  m_Name: Turret Asset
   m_EditorClassIdentifier: 
-  StartHealth: 100
-  ViewPrefab: {fileID: 3616589238206299840, guid: 7cc84c5bdec60164293adbe498cb090b, type: 3}
-  IsFlyingEnemy: 1
+  ViewPrefab: {fileID: 5278299731627930209, guid: 8c2d482eaacce4642aa4c35a461dadcb, type: 3}

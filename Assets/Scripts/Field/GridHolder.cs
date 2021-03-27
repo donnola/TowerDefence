@@ -27,6 +27,10 @@ namespace Field
         public Vector2Int StartCoordinate => m_StartCoordinate;
 
         public Grid Grid => m_Grid;
+
+        public float NodeSize => m_NodeSize;
+
+        public Vector3 Offset => m_Offset;
         
         private void OnValidate()
         {
@@ -87,13 +91,8 @@ namespace Field
                 Vector3 difference = hitPosition - m_Offset;
 
                 int x = (int)(difference.x / m_NodeSize);
-                int y = (int) (difference.z / m_NodeSize);
+                int y = (int)(difference.z / m_NodeSize);
                 
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Node node = m_Grid.GetNode(x, y);
-                    m_Grid.TryOccupyNode(new Vector2Int(x, y), !node.IsOccupied);
-                }
                 m_Grid.SelectCoordinate(new Vector2Int(x, y));
             }
             else

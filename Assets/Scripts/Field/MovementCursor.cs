@@ -17,8 +17,8 @@ namespace Field
 
         private Vector3 m_Offset;
         
-        [SerializeField]
-        private MovementAgent m_MovementAgent;
+        //[SerializeField]
+        //private MovementAgent m_MovementAgent;
         [SerializeField]
         private GameObject m_Cursor;
 
@@ -88,7 +88,7 @@ namespace Field
                 m_Cursor.transform.position = newPos;
                 if (Input.GetMouseButtonDown(0))
                 {
-                    m_MovementAgent.SetTarget(newPos);
+                    //m_MovementAgent.SetTarget(newPos);
                 }
             }
             else

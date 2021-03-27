@@ -1,4 +1,5 @@
 ﻿using Field;
+using RunTime;
 using UnityEngine;
 using Grid = Field.Grid;
 
@@ -8,12 +9,14 @@ namespace Enemy
     {
         private float m_Speed;
         private Transform m_Transform;
+        private EnemyData m_Data;
 
-        public GridMovementAgent(float speed, Transform transform, Grid grid)
+        public GridMovementAgent(float speed, Transform transform, Grid grid, EnemyData data)
         {
             m_Speed = speed;
             m_Transform = transform;
-            
+            m_Data = data;
+
             SetTargetNode(grid.GetStartNode());
         }
 
@@ -34,7 +37,12 @@ namespace Enemy
             float distance = (target - m_Transform.position).magnitude;
             if (distance < TOLERANCE)
             {
+                m_TargetNode.EnemyDatas.Remove(m_Data);
                 m_TargetNode = m_TargetNode.NextNode;
+                if (m_TargetNode != null)
+                {
+                    m_TargetNode.EnemyDatas.Add(m_Data);
+                }
                 return;
             }
 
@@ -46,6 +54,7 @@ namespace Enemy
         private void SetTargetNode(Node node)
         {
             m_TargetNode = node;
+            m_TargetNode.EnemyDatas.Add(m_Data);
         }
     }
 }
