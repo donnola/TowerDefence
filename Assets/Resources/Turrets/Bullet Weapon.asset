@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d517e3bbf2574733982696215ccc3444, type: 3}
-  m_Name: Spawn Waves Asset
+  m_Script: {fileID: 11500000, guid: f2e59e2b5f1746b691603501379d08fe, type: 3}
+  m_Name: Bullet Weapon
   m_EditorClassIdentifier: 
-  SpawnWaves:
-  - EnemyAsset: {fileID: 11400000, guid: 1dfaf1e91392c754196cced74718cb8b, type: 2}
-    Count: 10
-    TimeBetweenSpawn: 1
-    TimeBeforeStartWave: 1
+  RateOfFire: 5
+  MaxDistance: 2
+  ProjectileAsset: {fileID: 11400000, guid: 7573c4ab34f49874b93f6022b2f68a71, type: 2}

@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d517e3bbf2574733982696215ccc3444, type: 3}
-  m_Name: Spawn Waves Asset
+  m_Script: {fileID: 11500000, guid: 486569a3bdab42d8bc75f6d70cfd1e45, type: 3}
+  m_Name: Turret
   m_EditorClassIdentifier: 
-  SpawnWaves:
-  - EnemyAsset: {fileID: 11400000, guid: 1dfaf1e91392c754196cced74718cb8b, type: 2}
-    Count: 10
-    TimeBetweenSpawn: 1
-    TimeBeforeStartWave: 1
+  ViewPrefab: {fileID: 5278299731627930209, guid: 8c2d482eaacce4642aa4c35a461dadcb, type: 3}
+  WeaponAsset: {fileID: 11400000, guid: 21654c048e758da4388151ff89d707b4, type: 2}

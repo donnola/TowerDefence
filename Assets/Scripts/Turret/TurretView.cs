@@ -8,6 +8,9 @@ namespace Turret
         [SerializeField] 
         private Transform m_ProjectileOrigin;
 
+        [SerializeField] 
+        private Transform m_Tower;
+
         private TurretData m_Data;
 
         public TurretData Data => m_Data;
@@ -18,6 +21,12 @@ namespace Turret
         {
             m_Data = data;
             transform.position = m_Data.Node.Position;
+        }
+
+        public void TowerLookAt(Vector3 point)
+        {
+            point.y = m_Tower.position.y;
+            m_Tower.LookAt(point);
         }
     }
 }

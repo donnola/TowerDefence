@@ -32,7 +32,6 @@ namespace TurretSpawn
                 Node selectedNode = m_Grid.GetSelectedNode();
                 if (selectedNode.IsOccupied || !m_Grid.CanOccupy(selectedNode))
                 {
-                    Debug.Log("ooouu");
                     return;
                 }
                 SpawnTurret(m_Market.ChosenTurret, selectedNode);
@@ -43,9 +42,11 @@ namespace TurretSpawn
         {
             TurretView view = Object.Instantiate(asset.ViewPrefab);
             TurretData data = new TurretData(asset, node);
+            
             data.AttachView(view);
+            Game.Player.TurretSpawned(data);
+            
             node.IsOccupied = true;
-            Debug.Log("hmmm");
             m_Grid.UpdatePathfinding();
         }
     }
