@@ -48,7 +48,7 @@ namespace Turret.Weapon.Projectile
             }
 
             m_ClosestEnemyData = 
-                EnemySearch.GetClosestEnemy(m_View.transform.position, m_AvailableNodes);
+                EnemySearch.GetClosestEnemy(m_View.transform.position, m_MaxDistance, m_AvailableNodes);
             if (m_ClosestEnemyData == null)
             {
                 return;

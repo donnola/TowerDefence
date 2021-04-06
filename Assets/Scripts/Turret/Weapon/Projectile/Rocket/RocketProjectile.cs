@@ -21,7 +21,7 @@ namespace Turret.Weapon.Projectile.Rocket
         
         public void TickApproaching()
         {
-            transform.LookAt(m_TargetEnemy.View.transform.Find("Body").position);
+            transform.LookAt(m_TargetEnemy.View.Body.transform.position);
             transform.Translate(transform.forward * (m_Speed * Time.deltaTime), Space.World);
         }
         
@@ -45,17 +45,22 @@ namespace Turret.Weapon.Projectile.Rocket
 
         public void DestroyProjectile()
         {
+            Vector3 pointHit = m_HitEnemy.View.transform.position;
+            float sqrDamageRadius = m_DamageRadius * m_DamageRadius;
             if (m_HitEnemy != null)
             {
                 foreach (Node node in Game.Player.Grid.GetNodesInCircle(m_HitEnemy.View.transform.position, m_DamageRadius))
                 {
                     foreach (EnemyData enemy in node.EnemyDatas)
                     {
-                        enemy.GetDamage(m_Damage);
+                        float sqrDistance = (enemy.View.transform.position - pointHit).sqrMagnitude;
+                        if (sqrDistance <= sqrDamageRadius)
+                        {
+                            enemy.GetDamage(m_Damage);
+                        }
                     }
                 }
             }
-
             Destroy(gameObject);
         }
     }

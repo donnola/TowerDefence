@@ -11,7 +11,7 @@ namespace Turret.Weapon.Projectile.Bullet
         public override IProjectile CreateProjectile(Vector3 origin, Vector3 originForward, EnemyData enemyData)
         {
             BulletProjectile bullet = Instantiate(m_BulletPrefab, origin, Quaternion.LookRotation(originForward, Vector3.up));
-            bullet.transform.LookAt(enemyData.View.transform.Find("Body").position);
+            bullet.transform.LookAt(enemyData.View.Body.transform.position);
             return bullet;
         }
     }

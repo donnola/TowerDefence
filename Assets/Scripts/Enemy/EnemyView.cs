@@ -8,6 +8,11 @@ namespace Enemy
         private EnemyData m_Data;
         private IMovementAgent m_MovementAgent;
 
+        [SerializeField] 
+        private GameObject m_Body;
+
+        public GameObject Body => m_Body;
+
         public EnemyData Data => m_Data;
 
         public IMovementAgent MovementAgent => m_MovementAgent;

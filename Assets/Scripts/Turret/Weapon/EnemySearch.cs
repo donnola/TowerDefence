@@ -10,7 +10,7 @@ namespace Turret.Weapon
     {
 
         [CanBeNull]
-        public static EnemyData GetClosestEnemy(Vector3 center, List<Node> nodes)
+        public static EnemyData GetClosestEnemy(Vector3 center, float maxDistance, List<Node> nodes)
         {
             float minSqrDistance = float.MaxValue;
             EnemyData closestEnemy = null;
@@ -19,8 +19,8 @@ namespace Turret.Weapon
                 foreach (EnemyData enemyData in node.EnemyDatas)
                 {
                     float sqrDistance = (enemyData.View.transform.position - center).sqrMagnitude;
-
-                    if (sqrDistance < minSqrDistance)
+                    
+                    if (sqrDistance <= maxDistance && sqrDistance < minSqrDistance)
                     {
                         minSqrDistance = sqrDistance;
                         closestEnemy = enemyData;

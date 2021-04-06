@@ -29,6 +29,7 @@ namespace Field
             m_Width = width;
             m_Height = height;
             m_NodeSize = nodeSize;
+            m_Offset = offset;
 
             m_StartCoordinate = start;
             m_TargetCoordinate = target;
@@ -152,19 +153,13 @@ namespace Field
         public List<Node> GetNodesInCircle(Vector3 point, float radius)
         {
             List<Node> nodesInCircle = new List<Node>();
-            for (float i = -radius; i < radius; i += m_NodeSize/10)
+            float sqrRadius = radius * radius;
+            foreach (Node node in m_Nodes)
             {
-                for (float j = -radius; j < radius; j += m_NodeSize/10)
+                float sqrDistance = (node.Position - point).sqrMagnitude;
+                if (sqrDistance < sqrRadius)
                 {
-                    Vector3 nodePoint = point + new Vector3(i, 0, 0) + new Vector3(0, 0, j);
-                    Node curNode1 = GetNodeAtPoint(nodePoint);
-                    if (curNode1 != null && (nodePoint - point).magnitude < radius)
-                    {
-                        if (!nodesInCircle.Contains(curNode1))
-                        {
-                            nodesInCircle.Add(GetNodeAtPoint(nodePoint));
-                        }
-                    }
+                    nodesInCircle.Add(node);
                 }
             }
             return nodesInCircle;

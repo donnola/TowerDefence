@@ -33,7 +33,7 @@ namespace Turret.Weapon.Laser
         public void TickShoot()
         {
             TickTower();
-            m_ClosestEnemyData = EnemySearch.GetClosestEnemy(m_View.transform.position, m_AvailableNodes);
+            m_ClosestEnemyData = EnemySearch.GetClosestEnemy(m_View.transform.position, m_MaxDistance, m_AvailableNodes);
             if (m_ClosestEnemyData == null)
             {
                 m_LineRenderer.gameObject.SetActive(false);
@@ -41,7 +41,7 @@ namespace Turret.Weapon.Laser
             else
             {
                 m_LineRenderer.SetPosition(0, m_View.ProjectileOrigin.position);
-                m_LineRenderer.SetPosition(1, m_ClosestEnemyData.View.transform.Find("Body").position);
+                m_LineRenderer.SetPosition(1, m_ClosestEnemyData.View.Body.transform.position);
                 m_LineRenderer.gameObject.SetActive(true);
                 m_ClosestEnemyData.GetDamage(m_Damage * Time.deltaTime);
             }
