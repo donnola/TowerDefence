@@ -1,4 +1,5 @@
 ﻿using Assets;
+using RunTime;
 using UnityEngine;
 
 namespace Enemy
@@ -8,12 +9,14 @@ namespace Enemy
         private EnemyView m_View;
         private float m_Health;
         public EnemyView View => m_View;
-        public readonly EnemyAsset Asset;
+        private EnemyAsset m_Asset;
+        public EnemyAsset Asset => m_Asset;
 
         public EnemyData(EnemyAsset asset)
         {
-            Asset = asset;
+            m_Asset = asset;
             m_Health = asset.StartHealth;
+            
         }
 
         public void AttachView(EnemyView view)
@@ -33,7 +36,9 @@ namespace Enemy
 
         private void Die()
         {
-            Debug.Log("Die");
+            m_View.Die();
+            Game.Player.EnemyDied(this);
+            m_View.MovementAgent.Die();
         }
     }
 }

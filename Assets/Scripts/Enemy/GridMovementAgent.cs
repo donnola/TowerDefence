@@ -66,6 +66,15 @@ namespace Enemy
             }
         }
 
+        public void Die()
+        {
+            Node curNode = m_Grid.GetNodeAtPoint(m_Transform.position);
+            if (curNode != null)
+            {
+                curNode.EnemyDatas.Remove(m_Data);
+            }
+        }
+
         private void SetTargetNode(Node node)
         {
             m_TargetNode = node;
