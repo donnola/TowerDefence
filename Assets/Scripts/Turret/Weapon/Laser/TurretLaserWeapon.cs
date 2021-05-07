@@ -33,7 +33,8 @@ namespace Turret.Weapon.Laser
         public void TickShoot()
         {
             TickTower();
-            m_ClosestEnemyData = EnemySearch.GetClosestEnemy(m_View.transform.position, m_MaxDistance, m_AvailableNodes);
+            m_ClosestEnemyData = Game.Player.EnemySearch.GetClosestEnemy(m_View.transform.position, 
+                m_MaxDistance, m_AvailableNodes);
             if (m_ClosestEnemyData == null)
             {
                 m_LineRenderer.gameObject.SetActive(false);
@@ -48,7 +49,7 @@ namespace Turret.Weapon.Laser
         }
         private void TickTower()
         {
-            if (m_ClosestEnemyData != null)
+            if (m_ClosestEnemyData != null && !m_ClosestEnemyData.IsDead)
             {
                 m_View.TowerLookAt(m_ClosestEnemyData.View.transform.position);
             }

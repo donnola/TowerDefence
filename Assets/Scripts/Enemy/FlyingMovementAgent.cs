@@ -62,6 +62,11 @@ namespace Enemy
                 m_LastNode = curNode;
             }
         }
+        
+        public Node GetCurrentNode()
+        {
+            return m_Grid.GetNodeAtPoint(m_Transform.position);
+        }
 
         public void Die()
         {

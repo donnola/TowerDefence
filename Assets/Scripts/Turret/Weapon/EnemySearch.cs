@@ -6,11 +6,17 @@ using UnityEngine;
 
 namespace Turret.Weapon
 {
-    public static class EnemySearch
+    public class EnemySearch
     {
+        private IReadOnlyList<EnemyData> m_EnemyDatas;
+
+        public EnemySearch(IReadOnlyList<EnemyData> enemyDatas)
+        {
+            m_EnemyDatas = enemyDatas;
+        }
 
         [CanBeNull]
-        public static EnemyData GetClosestEnemy(Vector3 center, float maxDistance, List<Node> nodes)
+        public EnemyData GetClosestEnemy(Vector3 center, float maxDistance, List<Node> nodes)
         {
             float minSqrDistance = float.MaxValue;
             EnemyData closestEnemy = null;

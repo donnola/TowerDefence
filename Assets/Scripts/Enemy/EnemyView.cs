@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using Grid = Field.Grid;
+using UI.InGame.Overtips;
 
 namespace Enemy
 {
     public class EnemyView : MonoBehaviour
     {
+        [SerializeField]
+        private EnemyOvertip m_Overtip;
         private EnemyData m_Data;
         private IMovementAgent m_MovementAgent;
         [SerializeField] 
@@ -24,11 +27,18 @@ namespace Enemy
         public void AttachData(EnemyData data)
         {
             m_Data = data;
+            m_Overtip.SetData(m_Data);
         }
 
         public void Die()
         {
             m_Animator.SetTrigger(Die1);
+            Destroy(gameObject, 2f);
+        }
+        
+        public void ReachedTarget()
+        {
+            Destroy(gameObject);
         }
 
         public void CreateMovementAgent(Grid grid)

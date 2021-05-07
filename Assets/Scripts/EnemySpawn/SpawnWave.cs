@@ -8,7 +8,7 @@ namespace EnemySpawn
     {
         public EnemyAsset EnemyAsset;
         public int Count;
-        public float TimeBetweenSpawn;
+        public float TimeBetweenSpawns;
 
         public float TimeBeforeStartWave;
     }

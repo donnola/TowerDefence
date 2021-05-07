@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets;
+using Main;
 using Resources;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,11 +36,13 @@ namespace RunTime
         {
             if (!operation.isDone)
             {
-                throw new Exception();
+                throw new Exception("Can't load scene");
             }
             s_Player = new Player();
-            Runner runner = Object.FindObjectOfType<Runner>();
-            runner.StartRunning();
+            s_Runner = Object.FindObjectOfType<Runner>();
+            s_Runner.StartRunning();
+            
+            SceneManager.LoadScene(AssetRoot.UIScene.name, LoadSceneMode.Additive);
         }
 
         public static void StopPlayer()

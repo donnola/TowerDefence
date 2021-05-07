@@ -75,6 +75,11 @@ namespace Enemy
             }
         }
 
+        public Node GetCurrentNode()
+        {
+            return m_Grid.GetNodeAtPoint(m_Transform.position);
+        }
+
         private void SetTargetNode(Node node)
         {
             m_TargetNode = node;

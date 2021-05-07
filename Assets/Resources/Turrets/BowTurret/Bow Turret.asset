@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486569a3bdab42d8bc75f6d70cfd1e45, type: 3}
   m_Name: Bow Turret
   m_EditorClassIdentifier: 
+  Sprite: {fileID: 0}
+  Description: 
   ViewPrefab: {fileID: 5328498162110332018, guid: dc598b541eabc544da3ccddd67157a05, type: 3}
   WeaponAsset: {fileID: 11400000, guid: 2c8d87f49c5e7f1419131dac781c4a43, type: 2}
+  Price: 2

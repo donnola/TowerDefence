@@ -1,4 +1,5 @@
-﻿using Assets;
+﻿using System;
+using Assets;
 using RunTime;
 using UnityEngine;
 
@@ -8,9 +9,15 @@ namespace Enemy
     {
         private EnemyView m_View;
         private float m_Health;
+
+        public float Health => m_Health;
         public EnemyView View => m_View;
         private EnemyAsset m_Asset;
         public EnemyAsset Asset => m_Asset;
+
+        public bool IsDead => m_Health <= 0;
+        
+        public event Action<float> HealthChanged;
 
         public EnemyData(EnemyAsset asset)
         {
@@ -27,18 +34,28 @@ namespace Enemy
 
         public void GetDamage(float damage)
         {
-            m_Health -= damage;
-            if (m_Health <= 0)
+            if (IsDead)
             {
-                Die();
+                return;
             }
+            m_Health -= damage;
+            if (m_Health < 0)
+            {
+                m_Health = 0;
+            }
+            HealthChanged?.Invoke(m_Health);
         }
 
-        private void Die()
+        public void Die()
         {
             m_View.Die();
-            Game.Player.EnemyDied(this);
             m_View.MovementAgent.Die();
+        }
+        
+        public void ReachedTarget()
+        {
+            m_Health = 0;
+            View.ReachedTarget();
         }
     }
 }
